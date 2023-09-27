@@ -12,16 +12,25 @@ hashes = [
 
 letras = "abcdefghijklmnopqrstuvwxyz"
 contrasenas_encontradas = []
-combinaciones = [''.join(p) for p in itertools.product(letras, repeat=4)]
+# combinaciones = [''.join(p) for p in itertools.product(letras, repeat=4)]
 
+# Calcular el hash MD5 para cada combinación con el salt y comparar con los hashes entregados
+for a in letras:
+    for b in letras:
+        for c in letras:
+            for d in letras:
+                contrasena = a + b + c + d
+                contrasena_con_salt = contrasena + salt
+                hash_md5 = hashlib.md5(contrasena_con_salt.encode()).hexdigest()
+                if hash_md5 in hashes:
+                    contrasenas_encontradas.append((contrasena, hash_md5))
 
-
-# Calcular el hash MD5 para cada combinación con el salt y comparar con los hashes dados
-for contrasena in combinaciones:
-    contrasena_con_salt = contrasena + salt
-    hash_md5 = hashlib.md5(contrasena_con_salt.encode()).hexdigest()
-    if hash_md5 in hashes:
-        contrasenas_encontradas.append((contrasena, hash_md5))
+# Forma utilizando itertools
+# for contrasena in combinaciones:
+#     contrasena_con_salt = contrasena + salt
+#     hash_md5 = hashlib.md5(contrasena_con_salt.encode()).hexdigest()
+#     if hash_md5 in hashes:
+#         contrasenas_encontradas.append((contrasena, hash_md5))
 
 print("Contraseñas encontradas:")
 for contrasena, hash_encontrado in contrasenas_encontradas:
