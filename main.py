@@ -10,16 +10,16 @@ hashes = [
     "ea6f893319cc05683c828770bea3ce07"
 ] # Hashes entregados
 
-letras = "abcdefghijklmnopqrstuvwxyz"
+valores_ascii = list(range(32, 127)) # Lista de valores ASCII imprimibles
 contrasenas_encontradas = []
 # combinaciones = [''.join(p) for p in itertools.product(letras, repeat=4)]
 
 # Calcular el hash MD5 para cada combinación con el salt y comparar con los hashes entregados
-for a in letras:
-    for b in letras:
-        for c in letras:
-            for d in letras:
-                contrasena = a + b + c + d
+for a in valores_ascii:
+    for b in valores_ascii:
+        for c in valores_ascii:
+            for d in valores_ascii:
+                contrasena = chr(a) + chr(b) + chr(c) + chr(d)
                 contrasena_con_salt = contrasena + salt
                 hash_md5 = hashlib.md5(contrasena_con_salt.encode()).hexdigest()
                 if hash_md5 in hashes:
